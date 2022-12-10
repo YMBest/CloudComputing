@@ -25,7 +25,7 @@ feature_columns = ['fixed acidity', 'volatile acidity', 'citric acid', 'residual
                     'chlorides', 'free sulfur dioxide', 'total sulfur dioxide', 'density',
                     'pH', 'sulphates', 'alcohol']
 
-validation_assembler = VectorAssembler(inputCols=feature_columns,outputCol="corr_features")
+validation_assembler = VectorAssembler(inputCols=feature_columns,outputCol="features")
 td_validation = validation_assembler.transform(validation_data)
 
 
@@ -38,8 +38,8 @@ predictions = rfcfm.transform(td_validation)
 #Import evaluator and show the results.
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 
-evaluator = MulticlassClassificationEvaluator(labelCol="quality", predictionCol="prediction",metricName="accuracy")
+evaluator = MulticlassClassificationEvaluator(labelCol="Quality", predictionCol="Myprediction",metricName="Accuracy")
 accuracy = evaluator.evaluate(predictions)
 print("Accuracy = %s" % (accuracy))
-predictions.select('quality', 'prediction', 'probability').show()
+predictions.select('quality', 'prediction', 'accuracy').show()
 
